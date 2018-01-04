@@ -10,7 +10,7 @@ import SceneKit
 
 extension SCNNode {
     
-    func isContainedXZ(in boxNode: SCNNode) -> Bool {
+    func isNotContainedXZ(in boxNode: SCNNode) -> Bool {
         let box = boxNode.geometry as! SCNBox
         let width = Float(box.width)
         if fabs(position.x - boxNode.position.x) > width / 2.0 {

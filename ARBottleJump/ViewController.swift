@@ -97,7 +97,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                 sceneView.scene.rootNode.addChildNode(bottleNode)
             }
             
-            func anyVectorFrom(location: CGPoint) -> (SCNVector3)? {
+            func anyPositionFrom(location: CGPoint) -> (SCNVector3)? {
                 let results = sceneView.hitTest(location, types: .featurePoint)
                 guard !results.isEmpty else {
                     return nil
@@ -106,16 +106,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             }
             
             let location = touches.first?.location(in: sceneView)
-            if let position = anyVectorFrom(location: location!) {
+            if let position = anyPositionFrom(location: location!) {
                 generateBox(at: position)
                 addConeNode()
-                generateBox(at: boxNodes.last?.position)
+                generateBox(at: boxNodes.last!.position)
             }
         } else {
             if !maskTouch {
                 maskTouch = true
             }
-            
             touchTimePair.begin = (event?.timestamp)!
         }
     }
@@ -147,7 +146,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             bottleNode.recover()
             bottleNode.runAction(SCNAction.group(actions), completionHandler: { [weak self] in
                 let boxNode = (self?.boxNodes.last!)!
-                if (self?.bottleNode.isContainedXZ(in: boxNode))! {
+                if (self?.bottleNode.isNotContainedXZ(in: boxNode))! {
                     ScoreHelper.shared.setHighestScore(Int((self?.score)!))
                     
                     self?.alert(message: "You Lose!\n\nScore: \((self?.score)!)\n\nHighest: \(ScoreHelper.shared.getHighestScore())")
@@ -167,30 +166,28 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                         scoreNode.removeFromParentNode()
                     })
                     
-                    self?.generateBox(at: self?.boxNodes.last!.position)
+                    self?.generateBox(at: (self?.boxNodes.last!.position)!)
                 }
             })
         }
     }
     
-    private func generateBox(at position: SCNVector3?) {
+    private func generateBox(at realPosition: SCNVector3) {
         let box = SCNBox(width: kBoxWidth, height: kBoxWidth / 2.0, length: kBoxWidth, chamferRadius: 0.0)
         let node = SCNNode(geometry: box)
         let material = SCNMaterial()
         material.diffuse.contents = UIColor.randomColor()
         box.materials = [material]
         
-        if let realPosition = position {
-            if boxNodes.isEmpty {
-                node.position = realPosition
+        if boxNodes.isEmpty {
+            node.position = realPosition
+        } else {
+            nextDirection = NextDirection(rawValue: Int(arc4random() % 2))!
+            let deltaDistance = Double(arc4random() % 25 + 25) / 100.0  // range: 0.25 ~ 0.5
+            if nextDirection == .left {
+                node.position = SCNVector3(realPosition.x + Float(deltaDistance), realPosition.y, realPosition.z)
             } else {
-                nextDirection = NextDirection(rawValue: Int(arc4random() % 2))!
-                let deltaDistance = Double(arc4random() % 25 + 25) / 100.0  // range: 0.25 ~ 0.5
-                if nextDirection == .left {
-                    node.position = SCNVector3(realPosition.x + Float(deltaDistance), realPosition.y, realPosition.z)
-                } else {
-                    node.position = SCNVector3(realPosition.x, realPosition.y, realPosition.z + Float(deltaDistance))
-                }
+                node.position = SCNVector3(realPosition.x, realPosition.y, realPosition.z + Float(deltaDistance))
             }
         }
         
