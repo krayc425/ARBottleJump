@@ -11,11 +11,14 @@ import SceneKit
 
 class BottleNode: SCNNode {
     
-    private let minimunHeight           : CGFloat = 0.15
+    private let minimumHeight           : CGFloat = 0.15
     private let durationToReduce        : TimeInterval = 1.0 / 600.0
     private let coneNodeHeight          : CGFloat = 0.2
     private let reduceHeightUnit        : CGFloat = 0.001
 
+    var maskPosition: Bool = false
+    var positionY: Float = 0.0
+    
     lazy var myMaterial: SCNMaterial = {
         let material = SCNMaterial()
         material.diffuse.contents = UIColor.randomColor()
@@ -47,12 +50,16 @@ class BottleNode: SCNNode {
     }
     
     func scaleHeight() {
+        if !maskPosition {
+            positionY = position.y
+            maskPosition = true
+        }
         let coneGeometry = coneNode.geometry as! SCNCone
-        if coneGeometry.height > minimunHeight {
+        if coneGeometry.height > minimumHeight {
             sphereNode.runAction(SCNAction.move(by: SCNVector3(0, -reduceHeightUnit, 0), duration: durationToReduce))
-            coneNode.runAction(SCNAction.run({ _ in
+            coneNode.runAction(SCNAction.group([SCNAction.run({ _ in
                 coneGeometry.height -= self.reduceHeightUnit
-            }))
+            })]))
         }
     }
     

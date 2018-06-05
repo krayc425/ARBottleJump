@@ -10,6 +10,8 @@ import UIKit
 
 class ScoreHelper: NSObject {
     
+    private let kHeightScoreKey = "highest_score"
+    
     private override init() {
         
     }
@@ -17,12 +19,12 @@ class ScoreHelper: NSObject {
     static let shared: ScoreHelper = ScoreHelper()
     
     func getHighestScore() -> Int {
-        return UserDefaults.standard.integer(forKey: "highest_score")
+        return UserDefaults.standard.integer(forKey: kHeightScoreKey)
     }
     
     func setHighestScore(_ score: Int) {
         if score > getHighestScore() {
-            UserDefaults.standard.set(score, forKey: "highest_score")
+            UserDefaults.standard.set(score, forKey: kHeightScoreKey)
             UserDefaults.standard.synchronize()
         }
     }

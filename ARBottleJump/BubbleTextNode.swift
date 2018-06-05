@@ -40,7 +40,7 @@ class BubbleTextNode: SCNNode {
         // Text
         let bubble = SCNText(string: text, extrusionDepth: CGFloat(bubbleDepth / 5.0))
         bubble.font = UIFont(name: "HelveticaNeue", size: 0.18)
-        bubble.alignmentMode = kCAAlignmentCenter
+        bubble.alignmentMode = convertFromCATextLayerAlignmentMode(CATextLayerAlignmentMode.center)
         bubble.firstMaterial?.diffuse.contents = UIColor.white
         bubble.firstMaterial?.specular.contents = UIColor.white
         bubble.firstMaterial?.isDoubleSided = false
@@ -80,4 +80,9 @@ class BubbleTextNode: SCNNode {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCATextLayerAlignmentMode(_ input: CATextLayerAlignmentMode) -> String {
+	return input.rawValue
 }

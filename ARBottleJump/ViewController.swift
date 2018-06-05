@@ -33,12 +33,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     
     private var score: UInt = 0 {
         didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.scoreLabel.text = "\((self?.score)!)"
+            DispatchQueue.main.async { [unowned self] in
+                self.scoreLabel.text = "\(self.score)"
             }
         }
     }
-    private let scoreLabel = UILabel(frame: CGRect(x: 50, y: 50, width: UIScreen.main.bounds.width - 100, height: 30))
+    private let scoreLabel = UILabel(frame: CGRect(x: 50,
+                                                   y: 50,
+                                                   width: UIScreen.main.bounds.width - 100,
+                                                   height: 30))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +72,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         super.viewWillDisappear(animated)
         
         sceneView.session.pause()
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     func restartGame() {
@@ -113,7 +112,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             }
         } else {
             if !maskTouch {
-                maskTouch = true
+                maskTouch.toggle()
             }
             touchTimePair.begin = (event?.timestamp)!
         }
@@ -125,7 +124,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         }
         
         if maskTouch {
-            maskTouch = false
+            maskTouch.toggle()
             
             touchTimePair.end = (event?.timestamp)!
             
@@ -182,8 +181,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         if boxNodes.isEmpty {
             node.position = realPosition
         } else {
-            nextDirection = NextDirection(rawValue: Int(arc4random() % 2))!
-            let deltaDistance = Double(arc4random() % 25 + 25) / 100.0  // range: 0.25 ~ 0.5
+            nextDirection = NextDirection(rawValue: Int.random(in: 0...1))!
+            let deltaDistance = Double.random(in: 0.25...0.5)
             if nextDirection == .left {
                 node.position = SCNVector3(realPosition.x + Float(deltaDistance), realPosition.y, realPosition.z)
             } else {
