@@ -11,17 +11,17 @@ import SceneKit
 
 class BottleNode: SCNNode {
     
-    private let minimumHeight           : CGFloat = 0.15
-    private let durationToReduce        : TimeInterval = 1.0 / 600.0
-    private let coneNodeHeight          : CGFloat = 0.2
-    private let reduceHeightUnit        : CGFloat = 0.001
+    private let minimumHeight    : CGFloat      = 0.15
+    private let durationToReduce : TimeInterval = 1.0 / 600.0
+    private let coneNodeHeight   : CGFloat      = 0.2
+    private let reduceHeightUnit : CGFloat      = 0.001
 
     var maskPosition: Bool = false
     var positionY: Float = 0.0
     
     lazy var myMaterial: SCNMaterial = {
         let material = SCNMaterial()
-        material.diffuse.contents = UIColor.randomColor()
+        material.diffuse.contents = UIColor.random()
         return material
     }()
     

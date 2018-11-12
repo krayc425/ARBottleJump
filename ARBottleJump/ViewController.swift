@@ -10,9 +10,28 @@ import UIKit
 import SceneKit
 import ARKit
 
+// Game Parameters
+let kMoveDuration : TimeInterval = 0.25
+var kBoxWidth     : CGFloat      = 0.2
+let kJumpHeight   : CGFloat      = 0.2
+var distanceRange : ClosedRange<Float> = 0.25 ... 0.5
+
+var selectableColors : [UIColor] = [
+    UIColor(red: 252, green: 33, blue: 37, alpha: 1.0), // SystemRedColor
+    UIColor(red: 41, green: 199, blue: 50, alpha: 1.0), // SystemGreenColor
+    UIColor(red: 10, green: 96, blue: 255, alpha: 1.0), // SystemBlueColor
+    UIColor(red: 253, green: 130, blue: 8, alpha: 1.0), // SystemOrangeColor
+    UIColor(red: 254, green: 195, blue: 9, alpha: 1.0), // SystemYellowColor
+    UIColor(red: 251, green: 13, blue: 68, alpha: 1.0), // SystemPinkColor
+]
+
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
+    @IBOutlet weak var touchToBegin: UILabel!
     @IBOutlet var sceneView: ARSCNView!
+    @IBAction func btRestartTouchUpInside(_ sender: UIButton) {
+        initializeGame()
+    }
     private var currentAnchor: ARAnchor?
     
     private var boxNodes: [SCNNode] = []
@@ -21,15 +40,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }()
     
     private var maskTouch: Bool = false
-    private var nextDirection: NextDirection = .left
+    private var nextDirection: DirectionType = .left
     
     private var touchTimePair: (begin: TimeInterval, end: TimeInterval) = (0, 0)
-    private let distanceCalculateClosure: (TimeInterval) -> CGFloat = {
+    private let distance: (TimeInterval) -> CGFloat = {
         return CGFloat($0) / 4.0
     }
-    private let kMoveDuration: TimeInterval = 0.25
-    private let kBoxWidth: CGFloat = 0.2
-    private let kJumpHeight: CGFloat = 0.2
     
     private var score: UInt = 0 {
         didSet {
@@ -38,10 +54,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             }
         }
     }
-    private let scoreLabel = UILabel(frame: CGRect(x: 50,
-                                                   y: 50,
-                                                   width: UIScreen.main.bounds.width - 100,
-                                                   height: 30))
+
+    private let scoreLabel = UILabel(frame: CGRect(x: 20, y: 20, width: UIScreen.main.bounds.width - 40, height: 30))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +79,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         scoreLabel.textColor = .white
         sceneView.addSubview(scoreLabel)
         
-        restartGame()
+        initializeGame()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -74,7 +88,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         sceneView.session.pause()
     }
     
-    func restartGame() {
+    func initializeGame() {
         touchTimePair = (0, 0)
         score = 0
         boxNodes.forEach {
@@ -94,6 +108,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                                                  boxNodes.last!.position.y + Float(kBoxWidth) * 0.75,
                                                  boxNodes.last!.position.z)
                 sceneView.scene.rootNode.addChildNode(bottleNode)
+                touchToBegin.isHidden = true
             }
             
             func anyPositionFrom(location: CGPoint) -> (SCNVector3)? {
@@ -128,7 +143,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             
             touchTimePair.end = (event?.timestamp)!
             
-            let distance = distanceCalculateClosure(touchTimePair.end - touchTimePair.begin)
+            let distance = self.distance(touchTimePair.end - touchTimePair.begin)
             var actions = [SCNAction()]
             if nextDirection == .left {
                 let moveAction1 = SCNAction.moveBy(x: distance, y: kJumpHeight, z: 0, duration: kMoveDuration)
@@ -150,7 +165,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
                     
                     self?.alert(message: "You Lose!\n\nScore: \((self?.score)!)\n\nHighest: \(ScoreHelper.shared.getHighestScore())")
                     
-                    self?.restartGame()
+                    self?.initializeGame()
                 } else {
                     self?.score += 1
                     
@@ -170,26 +185,26 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             })
         }
     }
-    
+
     private func generateBox(at realPosition: SCNVector3) {
-        let box = SCNBox(width: kBoxWidth, height: kBoxWidth / 2.0, length: kBoxWidth, chamferRadius: 0.0)
+        let box = SCNBox(width: kBoxWidth, height: kBoxWidth / 3.0, length: kBoxWidth, chamferRadius: 0.0)
         let node = SCNNode(geometry: box)
         let material = SCNMaterial()
-        material.diffuse.contents = UIColor.randomColor()
+        material.diffuse.contents = UIColor.random()
         box.materials = [material]
         
-        if boxNodes.isEmpty {
+        if boxNodes.isEmpty { // if no box yet
             node.position = realPosition
         } else {
-            nextDirection = NextDirection(rawValue: Int.random(in: 0...1))!
-            let deltaDistance = Double.random(in: 0.25...0.5)
+            nextDirection = DirectionType(rawValue: Int.random(in: 0...1))! // set direction
+            let deltaDistance = Float.random(in: distanceRange) // distance between 2 boxes
             if nextDirection == .left {
-                node.position = SCNVector3(realPosition.x + Float(deltaDistance), realPosition.y, realPosition.z)
+                node.position = SCNVector3(realPosition.x + deltaDistance, realPosition.y, realPosition.z)
             } else {
-                node.position = SCNVector3(realPosition.x, realPosition.y, realPosition.z + Float(deltaDistance))
+                node.position = SCNVector3(realPosition.x, realPosition.y, realPosition.z + deltaDistance)
             }
         }
-        
+
         sceneView.scene.rootNode.addChildNode(node)
         boxNodes.append(node)
     }
@@ -215,8 +230,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             let ambientNode = SCNNode()
             ambientNode.light = ambientLight
             sceneView.scene.rootNode.addChildNode(ambientNode)
-            
-            alert(message: "Touch anywhere to begin")
+
+            self.touchToBegin.isHidden = false
         }
     }
     

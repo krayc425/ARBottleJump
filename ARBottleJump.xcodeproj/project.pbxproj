@@ -13,13 +13,14 @@
 		24604C581FFD30B500CDC1B0 /* BubbleTextNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24604C571FFD30B500CDC1B0 /* BubbleTextNode.swift */; };
 		24604C5A1FFD34DC00CDC1B0 /* ScoreHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24604C591FFD34DC00CDC1B0 /* ScoreHelper.swift */; };
 		24604C5D1FFDC4DA00CDC1B0 /* BottleNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24604C5C1FFDC4DA00CDC1B0 /* BottleNode.swift */; };
-		24604C5F1FFDD19000CDC1B0 /* NextDirectionEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24604C5E1FFDD19000CDC1B0 /* NextDirectionEnum.swift */; };
+		24604C5F1FFDD19000CDC1B0 /* DiretionTypeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24604C5E1FFDD19000CDC1B0 /* DiretionTypeEnum.swift */; };
 		24A93A041FFA63BB00F3F2DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A93A031FFA63BB00F3F2DF /* AppDelegate.swift */; };
 		24A93A081FFA63BB00F3F2DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A93A071FFA63BB00F3F2DF /* ViewController.swift */; };
 		24A93A0B1FFA63BB00F3F2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24A93A091FFA63BB00F3F2DF /* Main.storyboard */; };
 		24A93A0D1FFA63BB00F3F2DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 24A93A0C1FFA63BB00F3F2DF /* Assets.xcassets */; };
 		24A93A101FFA63BB00F3F2DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24A93A0E1FFA63BB00F3F2DF /* LaunchScreen.storyboard */; };
 		24A93A181FFA648600F3F2DF /* SCNVector3Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A93A171FFA648600F3F2DF /* SCNVector3Extension.swift */; };
+		B35232EF21985E3500AFA8F3 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35232EE21985E3500AFA8F3 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +30,7 @@
 		24604C571FFD30B500CDC1B0 /* BubbleTextNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleTextNode.swift; sourceTree = "<group>"; };
 		24604C591FFD34DC00CDC1B0 /* ScoreHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreHelper.swift; sourceTree = "<group>"; };
 		24604C5C1FFDC4DA00CDC1B0 /* BottleNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottleNode.swift; sourceTree = "<group>"; };
-		24604C5E1FFDD19000CDC1B0 /* NextDirectionEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextDirectionEnum.swift; sourceTree = "<group>"; };
+		24604C5E1FFDD19000CDC1B0 /* DiretionTypeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiretionTypeEnum.swift; sourceTree = "<group>"; };
 		24A93A001FFA63BB00F3F2DF /* ARBottleJump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBottleJump.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24A93A031FFA63BB00F3F2DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24A93A071FFA63BB00F3F2DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 		24A93A0F1FFA63BB00F3F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		24A93A111FFA63BB00F3F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24A93A171FFA648600F3F2DF /* SCNVector3Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNVector3Extension.swift; sourceTree = "<group>"; };
+		B35232EE21985E3500AFA8F3 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,13 +84,14 @@
 			isa = PBXGroup;
 			children = (
 				24A93A031FFA63BB00F3F2DF /* AppDelegate.swift */,
-				24604C5E1FFDD19000CDC1B0 /* NextDirectionEnum.swift */,
+				24604C5E1FFDD19000CDC1B0 /* DiretionTypeEnum.swift */,
 				24604C591FFD34DC00CDC1B0 /* ScoreHelper.swift */,
 				24A93A071FFA63BB00F3F2DF /* ViewController.swift */,
 				24604C5C1FFDC4DA00CDC1B0 /* BottleNode.swift */,
 				24604C571FFD30B500CDC1B0 /* BubbleTextNode.swift */,
 				24604C5B1FFD365D00CDC1B0 /* Extensions */,
 				24A93A091FFA63BB00F3F2DF /* Main.storyboard */,
+				B35232EE21985E3500AFA8F3 /* SettingsViewController.swift */,
 				24A93A0C1FFA63BB00F3F2DF /* Assets.xcassets */,
 				24A93A0E1FFA63BB00F3F2DF /* LaunchScreen.storyboard */,
 				24A93A111FFA63BB00F3F2DF /* Info.plist */,
@@ -171,6 +174,7 @@
 			files = (
 				24604C5A1FFD34DC00CDC1B0 /* ScoreHelper.swift in Sources */,
 				24604C581FFD30B500CDC1B0 /* BubbleTextNode.swift in Sources */,
+				B35232EF21985E3500AFA8F3 /* SettingsViewController.swift in Sources */,
 				24604C541FFD20CD00CDC1B0 /* SCNNodeExtension.swift in Sources */,
 				24A93A081FFA63BB00F3F2DF /* ViewController.swift in Sources */,
 				24604C561FFD273C00CDC1B0 /* UIViewControllerExtension.swift in Sources */,
@@ -178,7 +182,7 @@
 				24A93A041FFA63BB00F3F2DF /* AppDelegate.swift in Sources */,
 				24604C521FFD117A00CDC1B0 /* UIColorExtension.swift in Sources */,
 				24604C5D1FFDC4DA00CDC1B0 /* BottleNode.swift in Sources */,
-				24604C5F1FFDD19000CDC1B0 /* NextDirectionEnum.swift in Sources */,
+				24604C5F1FFDD19000CDC1B0 /* DiretionTypeEnum.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,11 +324,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2SF6KQ45R7;
+				DEVELOPMENT_TEAM = VGURA84Q2L;
 				INFOPLIST_FILE = ARBottleJump/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.krayc.ARBottleJump;
+				PRODUCT_BUNDLE_IDENTIFIER = "Peter-Luo--Inc..ARKit-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -336,11 +340,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2SF6KQ45R7;
+				DEVELOPMENT_TEAM = VGURA84Q2L;
 				INFOPLIST_FILE = ARBottleJump/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.krayc.ARBottleJump;
+				PRODUCT_BUNDLE_IDENTIFIER = "Peter-Luo--Inc..ARKit-Demo";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
