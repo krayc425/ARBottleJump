@@ -23,7 +23,3 @@ Welcome to Star⭐️~
 # License
 
 __GNU General Public License v3.0__
-
-
-
-
